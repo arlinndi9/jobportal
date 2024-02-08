@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        /* style.css */
+.create-form {
+  margin: 20px;
+}
+
+.create-form label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.create-form input[type="text"],
+.create-form textarea,
+.create-form input[type="datetime-local"] {
+  width: 100%;
+  padding: 5px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.create-form button[type="submit"] {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.create-form button[type="submit"]:hover {
+  background-color: #45a049;
+}
+
+ul li a {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #333;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+}
+
+ul li a:hover {
+  background-color: #555;
+}
+
+
+nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+nav ul li {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+nav ul li a {
+  color: #fff;
+  text-decoration: none;
+}
+header {
+  background-color: #333;
+  color: #fff;
+  padding: 20px;
+  text-align: center;
+}
+    </style>
+</head>
+
+<header>
+    <h1>Job Portal</h1>
+    <nav>
+      <ul>
+          {% if user.is_authenticated %}
+        <li><a href="{% url 'index' %}">Home</a></li>
+        <li><a href="{% url 'joblist' %}">Job Listings</a></li>
+        <li><a href="{% url 'create_job' %}">Post a Job</a></li>
+        <li><a href="{% url 'calculate_salary' %}">Calculate salary</a></li>
+        <li><a href="{% url 'logout' %}">Logout</a></li>
+          {% else %}
+        <li><a href="{% url 'login' %}">Login</a></li>
+        <li><a href="{% url 'signup' %}">Signup</a></li>
+           {% endif %}
+      </ul>
+    </nav>
+  </header>
+<body>
+<h2>Post a job</h2>
+<form method="POST" action="{% url 'create_job' %}" class="create-form">
+  {% csrf_token %}
+
+  <div>
+    <label for="title">Title:</label>
+    <input type="text" id="title" name="title" required>
+  </div>
+
+  <div>
+    <label for="description">Description:</label>
+    <textarea id="description" name="description" required></textarea>
+  </div>
+
+  <div>
+    <label for="category">Category:</label>
+    <input type="text" id="category" name="category" required>
+  </div>
+
+  <div>
+    <label for="requirements">Requirements:</label>
+    <textarea id="requirements" name="requirements"></textarea>
+  </div>
+
+  <div>
+    <label for="bonus_skills">Bonus Skills:</label>
+    <textarea id="bonus_skills" name="bonus_skills"></textarea>
+  </div>
+
+  <div>
+    <label for="name_company">Company Name:</label>
+    <input type="text" id="name_company" name="name_company" required>
+  </div>
+
+  <div>
+    <label for="about_company">About Company:</label>
+    <textarea id="about_company" name="about_company"></textarea>
+  </div>
+
+  <div>
+    <label for="location">Location:</label>
+    <input type="text" id="location" name="location">
+  </div>
+
+  <div>
+    <label for="expiration_date">Expiration Date:</label>
+    <input type="datetime-local" id="expiration_date" name="expiration_date" required>
+  </div>
+
+  <button type="submit">Create Job</button>
+</form>
+
+</body>
+</html>

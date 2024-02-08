@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Job Portal</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  background-color: #333;
+  color: #fff;
+  padding: 20px;
+  text-align: center;
+}
+
+h1 {
+  margin: 0;
+}
+.job-listings {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.job-listing {
+  width: calc(33.33% - 20px);
+  margin: 10px;
+  background-color: #f5f5f5;
+  padding: 20px;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.job-listing h3 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.job-listing p {
+  margin: 5px 0;
+}
+
+.job-listing a {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #333;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+}
+
+.job-listing a:hover {
+  background-color: #555;
+}
+
+nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+nav ul li {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+nav ul li a {
+  color: #fff;
+  text-decoration: none;
+}
+
+main {
+  margin: 20px;
+}
+
+section {
+  margin-bottom: 40px;
+}
+
+section h2 {
+  font-size: 24px;
+}
+
+section p {
+  margin-bottom: 20px;
+}
+
+.cta-button {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #333;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+}
+
+.cta-button:hover {
+  background-color: #555;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+ul li {
+  margin-bottom: 20px;
+}
+
+ul li h3 {
+  margin: 0;
+  font-size: 20px;
+}
+
+ul li p {
+  margin: 5px 0;
+}
+
+ul li a {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #333;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+}
+
+ul li a:hover {
+  background-color: #555;
+}
+
+footer {
+  background-color: #333;
+  color: #fff;
+  padding: 10px;
+  text-align: center;
+}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Job Portal</h1>
+    <nav>
+      <ul>
+          {% if user.is_authenticated %}
+        <li><a href="{% url 'index' %}">Home</a></li>
+        <li><a href="{% url 'joblist' %}">Job Listings</a></li>
+        <li><a href="{% url 'create_job' %}">Post a Job</a></li>
+        <li><a href="{% url 'calculate_salary' %}">Calculate salary</a></li>
+        <li><a href="{% url 'logout' %}">Logout</a></li>
+          {% else %}
+        <li><a href="{% url 'login' %}">Login</a></li>
+        <li><a href="{% url 'signup' %}">Signup</a></li>
+           {% endif %}
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section style="text-align: center">
+      <h2>Welcome to Job Portal</h2>
+      <p>Find your dream job or post job openings for potential candidates.</p>
+      <a href="#" class="cta-button">Get Started</a>
+    </section>
+    <section>
+      <h2>Job Listing</h2>
+      <div class="job-listings">
+        {% for job in j %}
+          <div class="job-listing">
+            <h3>{{ job.title }}</h3>
+            <p>{{ job.name_company }}</p>
+            <p>{{ job.location }}</p>
+            <a href="{% url 'job_detail' job.id %}">Job detail</a>
+            <a href="{% url 'apply_for_job' job.id %}?title={{ job.title }}">Apply Now</a>
+
+          </div>
+        {% endfor %}
+      </div>
+    </section>
+  </main>
+        <footer>
+    <p>&copy; 2023 Job Portal. All rights reserved.</p>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Calculator salary</title>
+    <style>
+    form {
+        margin-bottom: 20px;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    input[type="text"] {
+        padding: 5px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        width: 200px;
+    }
+
+    button[type="submit"] {
+        padding: 5px 10px;
+        border-radius: 5px;
+        background-color: white;
+        color: black;
+        border: none;
+        cursor: pointer;
+    }
+
+    h2 {
+        margin-bottom: 10px;
+    }
+
+    p {
+        margin-bottom: 5px;
+    }
+    body{
+        background-color: lightslategray;
+        font-size: 25px;
+    }
+    header {
+  background-color: #333;
+  color: #fff;
+  padding: 20px;
+  text-align: center;
+}
+
+ul li a {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #333;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+}
+
+ul li a:hover {
+  background-color: #555;
+}
+
+
+nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+nav ul li {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+nav ul li a {
+  color: #fff;
+  text-decoration: none;
+}
+</style>
+</head>
+
+<header>
+    <h1>Job Portal</h1>
+    <nav>
+      <ul>
+          {% if user.is_authenticated %}
+        <li><a href="{% url 'index' %}">Home</a></li>
+        <li><a href="{% url 'joblist' %}">Job Listings</a></li>
+        <li><a href="{% url 'create_job' %}">Post a Job</a></li>
+        <li><a href="{% url 'calculate_salary' %}">Calculate salary</a></li>
+        <li><a href="{% url 'logout' %}">Logout</a></li>
+          {% else %}
+        <li><a href="{% url 'login' %}">Login</a></li>
+        <li><a href="{% url 'signup' %}">Signup</a></li>
+           {% endif %}
+      </ul>
+    </nav>
+  </header>
+<body>
+    <h1 style="text-align: center"> Calculator salary</h1>
+    <form method="post" style="text-align: center">
+        {% csrf_token %}
+        <label for="paga_bruto">Paga Bruto:</label>
+        <input type="text" name="paga_bruto" id="paga_bruto">
+        <button type="submit">Calculate</button>
+
+    </form>
+    {% if error %}
+    <p style="color: red">{{ error }}</p>
+{% elif paga_bruto %}
+
+    <div style="text-align: center">
+        <h2>Results:</h2>
+        <p><strong>Paga Bruto:</strong> {{ paga_bruto }}€</p>
+        <p><strong>Kontributi Punetorit:</strong> {{ kontributi_punetorit }}%</p>
+        <p><strong>Kontributi Punedhenesit:</strong> {{ kontributi_punedhenesit }}%</p>
+        <p><strong>Paga Tatueshme:</strong> {{ paga_tatueshme }}€</p>
+        <p><strong>Vlera Totale Tatimi:</strong> {{ t }}€</p>
+        <p><strong>Paga Neto:</strong> {{ paga_neto }}€</p>
+    </div>
+{% endif %}
+</body>
+</html>
